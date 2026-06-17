@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laser Tower 강화 트리</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #13131f; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 40px 20px; }
+  h1 { color: #f0d0ff; font-size: 20px; margin-bottom: 40px; letter-spacing: 1px; }
+  .lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+  .node {
+    position: absolute; width: 130px; border-radius: 12px; padding: 12px 10px;
+    text-align: center; cursor: pointer; text-decoration: none; display: block;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .node:hover { transform: scale(1.07); box-shadow: 0 0 16px 4px rgba(200,80,255,0.4); }
+  .node .level { font-size: 11px; font-weight: bold; margin-bottom: 4px; }
+  .node .name { font-size: 12px; }
+  .node .stats { font-size: 9px; margin-top: 6px; opacity: 0.7; }
+  .node-base { background: #22102d; border: 2px solid #cc44ff; left: 285px; top: 0; }
+  .node-base .level { color: #cc44ff; } .node-base .name { color: #e8a0ff; }
+  .node-1a { background: #180820; border: 2px solid #aa22ee; left: 100px; top: 160px; }
+  .node-1a .level { color: #aa22ee; } .node-1a .name { color: #cc88ff; }
+  .node-1b { background: #200818; border: 2px solid #ee2288; left: 470px; top: 160px; }
+  .node-1b .level { color: #ee2288; } .node-1b .name { color: #ff88cc; }
+  .node-2a, .node-2b { background: #100514; border: 2px solid #aa22ee; }
+  .node-2a { left: 20px; top: 320px; } .node-2b { left: 180px; top: 320px; }
+  .node-2a .level, .node-2b .level { color: #aa22ee; }
+  .node-2a .name, .node-2b .name { color: #cc88ff; }
+  .node-2c, .node-2d { background: #140510; border: 2px solid #ee2288; }
+  .node-2c { left: 390px; top: 320px; } .node-2d { left: 550px; top: 320px; }
+  .node-2c .level, .node-2d .level { color: #ee2288; }
+  .node-2c .name, .node-2d .name { color: #ff88cc; }
+  .tree-wrap { position: relative; width: 700px; height: 440px; }
+  .legend { display: flex; gap: 24px; margin-top: 32px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #888; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; border: 2px solid; }
+  .legend-purple { border-color: #aa22ee; background: #180820; }
+  .legend-pink { border-color: #ee2288; background: #200818; }
+</style>
+</head>
+<body>
+<h1>⚡ Laser Tower 강화 트리</h1>
+<div class="tree-wrap">
+  <svg class="lines" viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg">
+    <line x1="350" y1="80" x2="165" y2="160" stroke="#aa22ee" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+    <line x1="350" y1="80" x2="535" y2="160" stroke="#ee2288" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+    <line x1="165" y1="240" x2="85" y2="320" stroke="#aa22ee" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+    <line x1="165" y1="240" x2="245" y2="320" stroke="#aa22ee" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+    <line x1="535" y1="240" x2="455" y2="320" stroke="#ee2288" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+    <line x1="535" y1="240" x2="615" y2="320" stroke="#ee2288" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+  </svg>
+  <a class="node node-base" href="#" target="_blank">
+    <div class="level">강화 0</div><div class="name">Laser Tower</div><div class="stats">기본형 · TBD</div>
+  </a>
+  <a class="node node-1a" href="#" target="_blank">
+    <div class="level">강화 1A</div><div class="name">TBD 특화</div><div class="stats">TBD</div>
+  </a>
+  <a class="node node-1b" href="#" target="_blank">
+    <div class="level">강화 1B</div><div class="name">TBD 특화</div><div class="stats">TBD</div>
+  </a>
+  <a class="node node-2a" href="#" target="_blank">
+    <div class="level">강화 2A</div><div class="name">TBD</div><div class="stats">1A 계열 최종</div>
+  </a>
+  <a class="node node-2b" href="#" target="_blank">
+    <div class="level">강화 2B</div><div class="name">TBD</div><div class="stats">1A 계열 최종</div>
+  </a>
+  <a class="node node-2c" href="#" target="_blank">
+    <div class="level">강화 2C</div><div class="name">TBD</div><div class="stats">1B 계열 최종</div>
+  </a>
+  <a class="node node-2d" href="#" target="_blank">
+    <div class="level">강화 2D</div><div class="name">TBD</div><div class="stats">1B 계열 최종</div>
+  </a>
+</div>
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot legend-purple"></div> 1A 계열</div>
+  <div class="legend-item"><div class="legend-dot legend-pink"></div> 1B 계열</div>
+</div>
+</body>
+</html>

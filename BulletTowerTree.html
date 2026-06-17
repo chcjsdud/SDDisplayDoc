@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bullet Tower 강화 트리</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #13131f; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 40px 20px; }
+  h1 { color: #e0e0ff; font-size: 20px; margin-bottom: 40px; letter-spacing: 1px; }
+
+  .tree { position: relative; width: 700px; }
+
+  /* SVG 연결선 */
+  .lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  /* 노드 공통 */
+  .node {
+    position: absolute;
+    width: 130px;
+    border-radius: 12px;
+    padding: 12px 10px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .node:hover { transform: scale(1.07); box-shadow: 0 0 16px 4px rgba(120,120,255,0.4); }
+  .node .level { font-size: 11px; font-weight: bold; margin-bottom: 4px; }
+  .node .name { font-size: 12px; }
+  .node .stats { font-size: 9px; margin-top: 6px; opacity: 0.7; }
+
+  /* 기본 (강화 0) */
+  .node-base { background: #2d2d50; border: 2px solid #7c7cff; left: 285px; top: 0; }
+  .node-base .level { color: #7c7cff; }
+  .node-base .name { color: #c0c0ff; }
+
+  /* 1A 계열 (파랑) */
+  .node-1a { background: #1a2e50; border: 2px solid #4a9eff; left: 100px; top: 160px; }
+  .node-1a .level { color: #4a9eff; }
+  .node-1a .name { color: #b0d0ff; }
+
+  /* 1B 계열 (빨강) */
+  .node-1b { background: #3a1a1a; border: 2px solid #ff6b6b; left: 470px; top: 160px; }
+  .node-1b .level { color: #ff6b6b; }
+  .node-1b .name { color: #ffb0b0; }
+
+  /* 2A, 2B (1A 계열) */
+  .node-2a { background: #122040; border: 2px solid #4a9eff; left: 20px; top: 320px; }
+  .node-2b { background: #122040; border: 2px solid #4a9eff; left: 180px; top: 320px; }
+  .node-2a .level, .node-2b .level { color: #4a9eff; }
+  .node-2a .name, .node-2b .name { color: #90c0ff; }
+
+  /* 2C, 2D (1B 계열) */
+  .node-2c { background: #2a1010; border: 2px solid #ff6b6b; left: 390px; top: 320px; }
+  .node-2d { background: #2a1010; border: 2px solid #ff6b6b; left: 550px; top: 320px; }
+  .node-2c .level, .node-2d .level { color: #ff6b6b; }
+  .node-2c .name, .node-2d .name { color: #ff9090; }
+
+  .tree-wrap { position: relative; width: 700px; height: 440px; }
+
+  /* 범례 */
+  .legend { display: flex; gap: 24px; margin-top: 32px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #888; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; border: 2px solid; }
+  .legend-blue { border-color: #4a9eff; background: #1a2e50; }
+  .legend-red { border-color: #ff6b6b; background: #3a1a1a; }
+</style>
+</head>
+<body>
+
+<h1>🔫 Bullet Tower 강화 트리</h1>
+
+<div class="tree-wrap">
+
+  <!-- SVG 연결선 -->
+  <svg class="lines" viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg">
+    <!-- 0 → 1A -->
+    <line x1="350" y1="80" x2="165" y2="160" stroke="#4a9eff" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+    <!-- 0 → 1B -->
+    <line x1="350" y1="80" x2="535" y2="160" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+    <!-- 1A → 2A -->
+    <line x1="165" y1="240" x2="85" y2="320" stroke="#4a9eff" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+    <!-- 1A → 2B -->
+    <line x1="165" y1="240" x2="245" y2="320" stroke="#4a9eff" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+    <!-- 1B → 2C -->
+    <line x1="535" y1="240" x2="455" y2="320" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+    <!-- 1B → 2D -->
+    <line x1="535" y1="240" x2="615" y2="320" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+  </svg>
+
+  <!-- 강화 0 -->
+  <a class="node node-base" href="https://app.notion.com/p/382cd8882e0e812495d0ff0b2d77c24b" target="_blank">
+    <div class="level">강화 0</div>
+    <div class="name">Bullet Tower</div>
+    <div class="stats">기본형 · TBD</div>
+  </a>
+
+  <!-- 강화 1A -->
+  <a class="node node-1a" href="https://app.notion.com/p/382cd8882e0e81a4ae74c6708c4a98ca" target="_blank">
+    <div class="level">강화 1A</div>
+    <div class="name">TBD 특화</div>
+    <div class="stats">TBD</div>
+  </a>
+
+  <!-- 강화 1B -->
+  <a class="node node-1b" href="https://app.notion.com/p/382cd8882e0e81f38b10ec9aab84497f" target="_blank">
+    <div class="level">강화 1B</div>
+    <div class="name">TBD 특화</div>
+    <div class="stats">TBD</div>
+  </a>
+
+  <!-- 강화 2A -->
+  <a class="node node-2a" href="https://app.notion.com/p/382cd8882e0e818da8a0e0ff0bbc3dbe" target="_blank">
+    <div class="level">강화 2A</div>
+    <div class="name">TBD</div>
+    <div class="stats">1A 계열 최종</div>
+  </a>
+
+  <!-- 강화 2B -->
+  <a class="node node-2b" href="https://app.notion.com/p/382cd8882e0e81998be8e8c527b3ac49" target="_blank">
+    <div class="level">강화 2B</div>
+    <div class="name">TBD</div>
+    <div class="stats">1A 계열 최종</div>
+  </a>
+
+  <!-- 강화 2C -->
+  <a class="node node-2c" href="https://app.notion.com/p/382cd8882e0e81229f31c0fc0d3d9b38" target="_blank">
+    <div class="level">강화 2C</div>
+    <div class="name">TBD</div>
+    <div class="stats">1B 계열 최종</div>
+  </a>
+
+  <!-- 강화 2D -->
+  <a class="node node-2d" href="https://app.notion.com/p/382cd8882e0e81bea1b7ce41038cbdac" target="_blank">
+    <div class="level">강화 2D</div>
+    <div class="name">TBD</div>
+    <div class="stats">1B 계열 최종</div>
+  </a>
+
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot legend-blue"></div> 1A 계열</div>
+  <div class="legend-item"><div class="legend-dot legend-red"></div> 1B 계열</div>
+</div>
+
+</body>
+</html>
