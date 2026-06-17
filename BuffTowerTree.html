@@ -10,8 +10,8 @@
   h1 { color: #fff; font-size: 20px; margin-bottom: 40px; letter-spacing: 1px; font-weight: 300; }
   .lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
   .node {
-    position: absolute; width: 130px; border-radius: 8px; padding: 12px 10px;
-    text-align: center; cursor: pointer; text-decoration: none; display: block;
+    position: absolute; width: 140px; border-radius: 8px; padding: 12px 10px;
+    text-align: center; display: block;
     background: #1a1a1a; border: 1px solid #444;
     transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
   }
@@ -19,14 +19,12 @@
   .node .level { font-size: 10px; color: #888; font-weight: bold; margin-bottom: 4px; letter-spacing: 1px; }
   .node .name  { font-size: 12px; color: #fff; }
   .node .stats { font-size: 9px; margin-top: 6px; color: #666; line-height: 1.5; }
-  .tree-wrap { position: relative; width: 700px; height: 440px; }
-  .node-base { left: 285px; top: 0; border-color: #888; }
-  .node-1a   { left: 100px; top: 160px; }
-  .node-1b   { left: 470px; top: 160px; }
-  .node-2a   { left: 20px;  top: 320px; }
-  .node-2b   { left: 180px; top: 320px; }
-  .node-2c   { left: 390px; top: 320px; }
-  .node-2d   { left: 550px; top: 320px; }
+  .tree-wrap { position: relative; width: 500px; height: 400px; }
+  .node-base { left: 180px; top: 0; border-color: #888; }
+  .node-1a   { left: 30px;  top: 160px; }
+  .node-1b   { left: 330px; top: 160px; }
+  .node-2a   { left: 30px;  top: 320px; }
+  .node-2b   { left: 330px; top: 320px; }
   .legend { display: flex; gap: 32px; margin-top: 32px; }
   .legend-item { font-size: 11px; color: #555; }
 </style>
@@ -34,39 +32,41 @@
 <body>
 <h1>Debuff Tower — 강화 트리</h1>
 <div class="tree-wrap">
-  <svg class="lines" viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg">
-    <line x1="350" y1="80" x2="165" y2="160" stroke="#444" stroke-width="1.5" stroke-dasharray="5,4"/>
-    <line x1="350" y1="80" x2="535" y2="160" stroke="#444" stroke-width="1.5" stroke-dasharray="5,4"/>
-    <line x1="165" y1="240" x2="85"  y2="320" stroke="#333" stroke-width="1.5" stroke-dasharray="5,4"/>
-    <line x1="165" y1="240" x2="245" y2="320" stroke="#333" stroke-width="1.5" stroke-dasharray="5,4"/>
-    <line x1="535" y1="240" x2="455" y2="320" stroke="#333" stroke-width="1.5" stroke-dasharray="5,4"/>
-    <line x1="535" y1="240" x2="615" y2="320" stroke="#333" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <svg class="lines" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+    <line x1="250" y1="80" x2="100" y2="160" stroke="#444" stroke-width="1.5" stroke-dasharray="5,4"/>
+    <line x1="250" y1="80" x2="400" y2="160" stroke="#444" stroke-width="1.5" stroke-dasharray="5,4"/>
+    <line x1="100" y1="240" x2="100" y2="320" stroke="#333" stroke-width="1.5" stroke-dasharray="5,4"/>
+    <line x1="400" y1="240" x2="400" y2="320" stroke="#333" stroke-width="1.5" stroke-dasharray="5,4"/>
   </svg>
-  <a class="node node-base" href="https://app.notion.com/p/382cd8882e0e812a8295da9c1adefc6f" target="_blank">
-    <div class="level">강화 0</div><div class="name">Debuff Tower</div><div class="stats">TBD</div>
-  </a>
-  <a class="node node-1a" href="#" target="_blank">
-    <div class="level">강화 1A</div><div class="name">TBD</div><div class="stats">TBD</div>
-  </a>
-  <a class="node node-1b" href="#" target="_blank">
-    <div class="level">강화 1B</div><div class="name">TBD</div><div class="stats">TBD</div>
-  </a>
-  <a class="node node-2a" href="#" target="_blank">
-    <div class="level">강화 2A</div><div class="name">TBD</div><div class="stats">1A 계열</div>
-  </a>
-  <a class="node node-2b" href="#" target="_blank">
-    <div class="level">강화 2B</div><div class="name">TBD</div><div class="stats">1A 계열</div>
-  </a>
-  <a class="node node-2c" href="#" target="_blank">
-    <div class="level">강화 2C</div><div class="name">TBD</div><div class="stats">1B 계열</div>
-  </a>
-  <a class="node node-2d" href="#" target="_blank">
-    <div class="level">강화 2D</div><div class="name">TBD</div><div class="stats">1B 계열</div>
-  </a>
+  <div class="node node-base">
+    <div class="level">강화 0</div>
+    <div class="name">DeBuff Tower</div>
+    <div class="stats">DMG 0.5 · 0.5s · DPS 1.0</div>
+  </div>
+  <div class="node node-1a">
+    <div class="level">강화 1A</div>
+    <div class="name">Buff Tower</div>
+    <div class="stats">아군 강화 ×1.5</div>
+  </div>
+  <div class="node node-1b">
+    <div class="level">강화 1B</div>
+    <div class="name">Ice Tower</div>
+    <div class="stats">DMG 0.5 · 1.0s · DPS 1.0</div>
+  </div>
+  <div class="node node-2a">
+    <div class="level">강화 2A</div>
+    <div class="name">강화 Buff Tower</div>
+    <div class="stats">아군 강화 ×2.0</div>
+  </div>
+  <div class="node node-2b">
+    <div class="level">강화 2B</div>
+    <div class="name">강화 Ice Tower</div>
+    <div class="stats">DMG 0.5 · 1.5s · DPS 1.0</div>
+  </div>
 </div>
 <div class="legend">
-  <div class="legend-item">1A 계열 → 강화 2A / 2B</div>
-  <div class="legend-item">1B 계열 → 강화 2C / 2D</div>
+  <div class="legend-item">1A 계열 → 강화 2A</div>
+  <div class="legend-item">1B 계열 → 강화 2B</div>
 </div>
 </body>
 </html>
